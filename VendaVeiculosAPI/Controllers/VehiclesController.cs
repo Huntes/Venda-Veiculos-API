@@ -1,32 +1,49 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VendaVeiculosAPI.Dto.Request;
+using VendaVeiculosAPI.Dto.Response;
+using VendaVeiculosAPI.Services.Interfaces;
 
 namespace VendaVeiculosAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     [Produces("application/json")]
+    [ProducesResponseType(typeof(String), 400)]
+    [ProducesResponseType(typeof(String), 404)]
     public class VehiclesController : ControllerBase
     {
+        private readonly ICarroService _service;
+        private readonly CancellationTokenSource _token;
+
+        public VehiclesController(ICarroService carroService)
+        {
+            _service = carroService;
+            _token = new CancellationTokenSource(5000);
+        }
+
         [HttpGet("getAll")]
+        [ProducesResponseType(typeof(List<CarroResponseDto>), 200)]
         public async Task<IActionResult> GetAll()
         {
             try
             {
-                return Ok();
+                var _cars = await _service.GetAllAsync(_token.Token);
+                return Ok(_cars);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpGet("get/{id}")]
-        public async Task<IActionResult> GetByID()
+        [ProducesResponseType(typeof(CarroResponseDto), 200)]
+        public async Task<IActionResult> GetByID(Guid id)
         {
             try
             {
-                return Ok();
+                return Ok(await _service.GetAsync(id, _token.Token));
             }
             catch (Exception ex)
             {
@@ -36,12 +53,12 @@ namespace VendaVeiculosAPI.Controllers
 
         [Authorize]
         [HttpPost("insert-car")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> Insert()
+        [ProducesResponseType(typeof(CarroResponseDto), 200)]
+        public async Task<IActionResult> Insert([FromBody] CarroRequestDto entity)
         {
             try
             {
-                return Ok();
+                return Ok(await _service.CreateAsync(entity, _token.Token));
             }
             catch (Exception ex)
             {
@@ -51,12 +68,27 @@ namespace VendaVeiculosAPI.Controllers
 
         [Authorize]
         [HttpPut("update/{id}")]
-        [ProducesResponseType(200)]
-        public async Task<IActionResult> Update()
+        [ProducesResponseType(typeof(CarroResponseDto), 200)]
+        public async Task<IActionResult> Update(Guid id, [FromBody] CarroRequestDto entity)
         {
             try
             {
-                return Ok();
+                return Ok(await _service.UpdateAsync(id, entity, _token.Token));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut("change-status/{id}")]
+        [ProducesResponseType(204)]
+        public async Task<IActionResult> ToggleCarro(Guid id)
+        {
+            try
+            {
+                return Ok(await _service.ToggleCarro(id, _token.Token));
             }
             catch (Exception ex)
             {
@@ -67,25 +99,11 @@ namespace VendaVeiculosAPI.Controllers
         [Authorize]
         [HttpDelete("delete/{id}")]
         [ProducesResponseType(204)]
-        public async Task<IActionResult> Delete()
+        public async Task<IActionResult> Delete(Guid id)
         {
             try
             {
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        [Authorize]
-        [HttpDelete("delete-all")]
-        [ProducesResponseType(204)]
-        public async Task<IActionResult> DeleteAll()
-        {
-            try
-            {
+                await _service.DeleteAsync(id, _token.Token);
                 return Ok();
             }
             catch (Exception ex)

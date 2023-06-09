@@ -2,7 +2,14 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using VendaVeiculosAPI.Repositories;
 using VendaVeiculosAPI.Utils;
+using Microsoft.EntityFrameworkCore;
+using VendaVeiculosAPI.Services;
+using AutoMapper;
+using AutoMapper.Internal;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +50,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+#region DependencyInjection
+SettingDI();
+builder.Services.AddDbContext<Context>(
+    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
+#endregion
+
 #region Autenticacao JWT
 builder.Services.AddAuthentication(c =>
 {
@@ -62,6 +76,17 @@ builder.Services.AddAuthentication(c =>
 });
 #endregion
 
+#region AutoMapperConfig
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+#endregion
+
+JsonConvert.DefaultSettings = () => new JsonSerializerSettings
+{ 
+    NullValueHandling = NullValueHandling.Ignore,
+    ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
+    ContractResolver = new CamelCasePropertyNamesContractResolver()
+};
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -80,3 +105,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void SettingDI()
+{
+    builder.Services.AddRepository();
+    builder.Services.AddServices();
+}

@@ -19,7 +19,7 @@ namespace VendaVeiculosAPI.Models
         [Column("Senha", TypeName = "VARCHAR(500)")]
         public string Senha { get; set; }
 
-        [Column("Papel")]
-        public Roles Role { get; set; }
+        [Column("TipoUsuario")]
+        public int TipoUser { get; set; }
     }
 }

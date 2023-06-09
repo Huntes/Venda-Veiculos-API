@@ -3,30 +3,53 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VendaVeiculosAPI.Models
 {
-    [Table("TB_CAR")]
+    [Table("TB_CARRO")]
     public class Car : BaseModel
     {
         [Key, Column("ID")]
         public Guid Id { get; set; }
 
-        [Column("Nome", TypeName = "VARCHAR(500)")]
+        [Required, Column("Nome", TypeName = "VARCHAR(500)")]
         public string Nome { get; set; }
 
-        [Column("Marca", TypeName = "VARCHAR(100)")]
+        [Required, Column("Marca", TypeName = "VARCHAR(100)")]
         public string Marca { get; set; }
 
-        [Column("Modelo", TypeName = "VARCHAR(500)")]
+        [Required, Column("Modelo", TypeName = "VARCHAR(500)")]
         public string Modelo { get; set; }
 
         [Column("Foto", TypeName = "VARCHAR(500)")]
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
 
-        public Car(string Nome, string Marca, string Modelo, string Foto)
+        [Required, Column("Ano")]
+        public int Ano { get; set; }
+
+        [Column("Status")]
+        public int Status { get; set; }
+
+        [Column("Preco", TypeName = "DECIMAL(10,2)")]
+        public double? Preco { get; set; }
+
+        [Column("Quilometragem", TypeName = "VARCHAR(500)")]
+        public string? Quilometragem { get; set; }
+
+        [ForeignKey("UsuarioCriacaoId")]
+        public Usuario? IDUsuarioCreate { get; set; }
+
+        public Car()
+        {
+            this.Nome = string.Empty;
+            this.Modelo = string.Empty;
+            this.Marca = string.Empty;
+        }
+        public Car(string Nome, string Marca, string Modelo, string Foto, int Ano, string? quilometragem) : base()
         {
             this.Nome = Nome;
             this.Marca = Marca;
             this.Modelo = Modelo;
             this.Foto = Foto;
+            this.Ano = Ano;
+            this.Quilometragem = quilometragem;
         }
     }
 }
