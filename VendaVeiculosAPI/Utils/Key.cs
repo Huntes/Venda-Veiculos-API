@@ -1,7 +1,7 @@
 ﻿namespace VendaVeiculosAPI.Utils
 {
-    internal class Key
+    public static class Key
     {
-        internal static string _secretKey = "1234567890123456789012345678901234567890123456789012345678901234";    
+        public static string _secretKey = "fedaf7d8863b48e197b9287d492b708e";    
     }
 }

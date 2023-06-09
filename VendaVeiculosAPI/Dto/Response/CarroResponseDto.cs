@@ -2,7 +2,7 @@
 
 namespace VendaVeiculosAPI.Dto.Response
 {
-    public class CarroResponseDto
+    public class CarroResponseDto : BaseResponseDto
     {
         public Guid Id { get; set; }
 

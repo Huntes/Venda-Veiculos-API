@@ -20,7 +20,7 @@ namespace VendaVeiculosAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(UsuarioRequestDto entity)
+        public async Task<IActionResult> Login([FromBody]LoginRequestDto entity)
         {
             try
             {

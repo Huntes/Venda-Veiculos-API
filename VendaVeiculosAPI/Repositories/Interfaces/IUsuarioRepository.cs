@@ -8,6 +8,7 @@ namespace VendaVeiculosAPI.Repositories.Interfaces
         Task<Usuario> GetByNameAsync(string name, CancellationToken token);
         Task<Usuario> GetByIdAsync(Guid id, CancellationToken token);
         Task<Usuario> ToggleAsync(Guid id, CancellationToken token);
+        Task<bool> ExistUsuario(string name, CancellationToken token);
         Task DeleteUserAsync(Guid id, CancellationToken token);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using VendaVeiculosAPI.Dto.Request;
 using VendaVeiculosAPI.Models;
 using VendaVeiculosAPI.Repositories.Interfaces;
@@ -15,18 +16,12 @@ namespace VendaVeiculosAPI.Services.Impl
             _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<string> Login(UsuarioRequestDto entity, CancellationToken token)
+        public async Task<string> Login(LoginRequestDto entity, CancellationToken token)
         {
-            string login = entity.Nome;
-            string senha = entity.Senha;
+            var _usuario = await _usuarioRepository.GetByNameAsync(entity.Login, token) 
+                ?? throw new Exception("Usuário não encontrado");
 
-            var _usuario = await _usuarioRepository.GetByNameAsync(login, token);
-
-            if(_usuario == null)
-            {
-                throw new Exception("Usuário não encontrado");
-            }
-            else if(_usuario.Senha != senha)
+            if (!Utils.Utils.VerifyPassword(entity.Password, _usuario.Senha))
             {
                 throw new Exception("Senha incorreta");
             }

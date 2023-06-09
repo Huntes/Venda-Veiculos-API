@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VendaVeiculosAPI.Dto.Response
 {
-    public class ArquivoResponseDto
+    public class ArquivoResponseDto : BaseResponseDto
     {
         public Guid Id { get; set; }
 

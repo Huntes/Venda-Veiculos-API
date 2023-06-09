@@ -16,7 +16,7 @@ namespace VendaVeiculosAPI.Models
         [Column("Nome", TypeName = "VARCHAR(500)")]
         public string Nome { get; set; }
 
-        [Column("Senha", TypeName = "VARCHAR(500)")]
+        [Column("Senha", TypeName = "VARCHAR(MAX)")]
         public string Senha { get; set; }
 
         [Column("TipoUsuario")]

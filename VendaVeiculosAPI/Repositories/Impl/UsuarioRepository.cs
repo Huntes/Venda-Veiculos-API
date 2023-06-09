@@ -21,7 +21,7 @@ namespace VendaVeiculosAPI.Repositories.Impl
         {
             return await _context.Usuarios
                .AsNoTracking()
-               .FirstOrDefaultAsync(c => c.Nome.ToUpper().Contains(name.ToUpper()), token);
+               .FirstOrDefaultAsync(c => c.Nome.ToUpper() == name.ToUpper(), token);
         }
 
         public async Task<Usuario> ToggleAsync(Guid id, CancellationToken token)
@@ -39,6 +39,11 @@ namespace VendaVeiculosAPI.Repositories.Impl
             _user.Ativo = false;
             _user.DataDelete = DateTimeHelpers.GetDateTimeNow();
             _context.Usuarios.Update(_user);
+        }
+
+        public Task<bool> ExistUsuario(string name, CancellationToken token)
+        {
+            return _context.Usuarios.AnyAsync(c => c.Nome.ToUpper() == name.ToUpper(), token);
         }
     }
 }

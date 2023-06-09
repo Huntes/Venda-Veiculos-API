@@ -10,6 +10,7 @@ using AutoMapper;
 using AutoMapper.Internal;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json;
+using VendaVeiculosAPI.Services.Impl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddCors();
 
 //Configuração de swagger para documentação de API e autenticação JWT
 builder.Services.AddSwaggerGen(c =>
@@ -64,6 +67,8 @@ builder.Services.AddAuthentication(c =>
     c.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(c =>
 {
+    c.ClaimsIssuer = "https://localhost:7079";
+    c.Audience = "https://localhost:7079";
     c.RequireHttpsMetadata = false;
     c.SaveToken = true;
     c.TokenValidationParameters = new TokenValidationParameters
@@ -100,11 +105,21 @@ app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "VendaVeicul
 
 app.UseHttpsRedirection();
 
+app.UseRouting();
+
+app.UseCors(x => x
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader()
+);
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+
 
 void SettingDI()
 {

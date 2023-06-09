@@ -4,6 +4,6 @@ namespace VendaVeiculosAPI.Services.Interfaces
 {
     public interface ILoginService
     {
-        Task<string> Login(UsuarioRequestDto entity, CancellationToken token);
+        Task<string> Login(LoginRequestDto entity, CancellationToken token);
     }
 }

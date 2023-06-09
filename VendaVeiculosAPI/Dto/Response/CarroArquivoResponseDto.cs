@@ -5,7 +5,7 @@ using VendaVeiculosAPI.Models;
 
 namespace VendaVeiculosAPI.Dto.Response
 {
-    public class CarroArquivoResponseDto
+    public class CarroArquivoResponseDto : BaseResponseDto
     {
         public Guid Id { get; set; }
 

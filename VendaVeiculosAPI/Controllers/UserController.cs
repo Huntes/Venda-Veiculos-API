@@ -51,7 +51,7 @@ namespace VendaVeiculosAPI.Controllers
         }
 
         [Authorize]
-        [HttpGet("update/{id}")]
+        [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(UsuarioResponseDto), 200)]
         public async Task<IActionResult> Update(Guid id, [FromBody] UsuarioRequestDto entity)
         {
