@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VendaVeiculosAPI.Filters;
 using VendaVeiculosAPI.Models;
 using VendaVeiculosAPI.Repositories.Interfaces;
 using VendaVeiculosAPI.Utils;
 
 namespace VendaVeiculosAPI.Repositories.Impl
 {
-    public class CarroRepository : BaseRepository<Car, CarroFilter>, ICarroRepository
+    public class CarroRepository : BaseRepository<Car>, ICarroRepository
     {
         public CarroRepository(Context context) : base(context){}
 
@@ -19,13 +18,13 @@ namespace VendaVeiculosAPI.Repositories.Impl
         {
             return await _context.Carros
                 .AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Id == id, token);
+                .FirstOrDefaultAsync(c => c.Id == id, token) ?? new Car();
         }
 
         public async Task<Car> GetByModelo(string modelo, CancellationToken token)
         {
-            return await _context.Carros
-                .FirstOrDefaultAsync(c => c.Modelo.ToUpper() == modelo.ToUpper());
+            return await _context.Carros.AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Modelo.ToUpper() == modelo.ToUpper()) ?? new Car();
         }
 
         public async Task<bool> ToggleStatus(Guid id, CancellationToken token)

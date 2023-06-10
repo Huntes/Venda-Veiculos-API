@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VendaVeiculosAPI.Repositories;
 
@@ -11,9 +12,11 @@ using VendaVeiculosAPI.Repositories;
 namespace VendaVeiculosAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230610170205_AtualizacaoTables")]
+    partial class AtualizacaoTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,16 +140,14 @@ namespace VendaVeiculosAPI.Migrations
                         .HasColumnName("ID");
 
                     b.Property<Guid>("ArquivoId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("ArquivoId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit")
                         .HasColumnName("Ativo");
 
                     b.Property<Guid>("CarroId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("CarroId");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAlteracao")
                         .HasColumnType("datetime2")

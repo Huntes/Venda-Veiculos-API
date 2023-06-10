@@ -9,11 +9,18 @@ namespace VendaVeiculosAPI.Models
         [Key, Column("ID")]
         public Guid Id { get; set; }
 
-        [Required, ForeignKey("CarroId")]
+        [Column("CarroId")]
+        public Guid CarroId { get; set; }
+
+        [ForeignKey("CarroId")]
         public Car Carro { get; set; }
 
-        [Required, ForeignKey("ArquivoId")]
+        [Column("ArquivoId")]
+        public Guid ArquivoId { get; set; }
+
+        [ForeignKey("ArquivoId")]
         public Arquivo Arquivo { get; set; }
+
         public CarroArquivo() { }
         public CarroArquivo(Car carro, Arquivo arquivo)
         {

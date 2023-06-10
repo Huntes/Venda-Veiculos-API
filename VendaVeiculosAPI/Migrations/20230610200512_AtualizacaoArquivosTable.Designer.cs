@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VendaVeiculosAPI.Repositories;
 
@@ -11,9 +12,11 @@ using VendaVeiculosAPI.Repositories;
 namespace VendaVeiculosAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230610200512_AtualizacaoArquivosTable")]
+    partial class AtualizacaoArquivosTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,6 +139,9 @@ namespace VendaVeiculosAPI.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ID");
 
+                    b.Property<Guid>("ARQUIVO_ID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("ArquivoId")
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ArquivoId");
@@ -143,6 +149,9 @@ namespace VendaVeiculosAPI.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit")
                         .HasColumnName("Ativo");
+
+                    b.Property<Guid>("CARRO_ID")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CarroId")
                         .HasColumnType("uniqueidentifier")
@@ -162,9 +171,9 @@ namespace VendaVeiculosAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArquivoId");
+                    b.HasIndex("ARQUIVO_ID");
 
-                    b.HasIndex("CarroId");
+                    b.HasIndex("CARRO_ID");
 
                     b.ToTable("TB_CARRO_ARQUIVO");
                 });
@@ -267,13 +276,13 @@ namespace VendaVeiculosAPI.Migrations
                 {
                     b.HasOne("VendaVeiculosAPI.Models.Arquivo", "Arquivo")
                         .WithMany()
-                        .HasForeignKey("ArquivoId")
+                        .HasForeignKey("ARQUIVO_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("VendaVeiculosAPI.Models.Car", "Carro")
                         .WithMany()
-                        .HasForeignKey("CarroId")
+                        .HasForeignKey("CARRO_ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

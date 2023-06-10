@@ -3,15 +3,24 @@ using VendaVeiculosAPI.Repositories.Interfaces;
 
 namespace VendaVeiculosAPI.Repositories.Impl
 {
-    public class BaseRepository<T, Filter> : IBaseRepository<T, Filter>
+    public class BaseRepository<T> : IBaseRepository<T>
         where T : class
-        where Filter : class
     {
         protected Context _context;
 
         public BaseRepository(Context context)
         {
             _context = context;
+        }
+
+        public IQueryable<T> GetAllQueryAsync()
+        {
+            return _context.Set<T>().AsQueryable().AsNoTracking();
+        }
+
+        public async Task<List<T>> GetAllAsync()
+        {
+            return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public async Task SaveChangesAsync(CancellationToken token)
@@ -25,13 +34,9 @@ namespace VendaVeiculosAPI.Repositories.Impl
             return entity;
         }
 
-        public async Task<List<T>> GetAllAsync()
-        {
-            return await _context.Set<T>().ToListAsync();
-        }
-
         public T Update(T entity)
         {
+            _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
             return entity;
         }

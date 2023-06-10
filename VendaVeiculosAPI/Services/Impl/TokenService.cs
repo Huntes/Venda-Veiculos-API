@@ -9,6 +9,7 @@ namespace VendaVeiculosAPI.Services.Impl
 {
     public static class TokenService
     {
+        #region Old Generator
         //public static string GenerateToken(Usuario usuario)
         //{
         //    //Instancia classe para gerar token
@@ -36,6 +37,7 @@ namespace VendaVeiculosAPI.Services.Impl
         //    var token = tokenHandler.CreateToken(tokenDescriptor);
         //    return tokenHandler.WriteToken(token);
         //}
+        #endregion
 
         public static string GenerateToken(Usuario user)
         {

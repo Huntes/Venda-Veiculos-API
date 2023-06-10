@@ -19,7 +19,7 @@ namespace VendaVeiculosAPI.Controllers
         public VehiclesController(ICarroService carroService)
         {
             _service = carroService;
-            _token = new CancellationTokenSource(5000);
+            _token = new CancellationTokenSource(500000);
         }
 
         [HttpGet("getAll")]
@@ -51,7 +51,7 @@ namespace VendaVeiculosAPI.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPost("insert-car")]
         [ProducesResponseType(typeof(CarroResponseDto), 200)]
         public async Task<IActionResult> Insert([FromBody] CarroRequestDto entity)
@@ -66,7 +66,7 @@ namespace VendaVeiculosAPI.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(CarroResponseDto), 200)]
         public async Task<IActionResult> Update(Guid id, [FromBody] CarroRequestDto entity)
@@ -81,7 +81,7 @@ namespace VendaVeiculosAPI.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpPut("change-status/{id}")]
         [ProducesResponseType(204)]
         public async Task<IActionResult> ToggleCarro(Guid id)
@@ -96,7 +96,7 @@ namespace VendaVeiculosAPI.Controllers
             }
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpDelete("delete/{id}")]
         [ProducesResponseType(204)]
         public async Task<IActionResult> Delete(Guid id)

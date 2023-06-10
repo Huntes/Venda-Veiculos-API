@@ -16,7 +16,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -55,9 +59,10 @@ builder.Services.AddSwaggerGen(c =>
 
 #region DependencyInjection
 SettingDI();
-builder.Services.AddDbContext<Context>(
-    options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")
-    ));
+builder.Services.AddDbContext<Context>(options => { 
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.EnableSensitiveDataLogging(true);
+});
 #endregion
 
 #region Autenticacao JWT

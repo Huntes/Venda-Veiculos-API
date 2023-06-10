@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VendaVeiculosAPI.Filters;
 using VendaVeiculosAPI.Models;
 using VendaVeiculosAPI.Repositories.Interfaces;
 using VendaVeiculosAPI.Utils;
 
 namespace VendaVeiculosAPI.Repositories.Impl
 {
-    public class ArquivoRepository : BaseRepository<Arquivo, ArquivoFilter>, IArquivoRepository
+    public class ArquivoRepository : BaseRepository<Arquivo>, IArquivoRepository
     {
         public ArquivoRepository(Context context) : base(context){}
 

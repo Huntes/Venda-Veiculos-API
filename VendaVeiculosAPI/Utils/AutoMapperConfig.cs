@@ -10,9 +10,11 @@ namespace VendaVeiculosAPI.Utils
         public AutoMapperConfig() 
         {
             CreateMap<UsuarioRequestDto, Usuario>().ReverseMap();
-            CreateMap<Usuario, UsuarioResponseDto>();
+            CreateMap<Usuario, UsuarioResponseDto>()
+                .ForMember(dest => dest.Senha, opt => opt.Ignore());
 
-            CreateMap<CarroRequestDto, Car>();
+            CreateMap<CarroRequestDto, Car>().ReverseMap()
+                .ForMember(dest => dest.Fotos, opt => opt.Ignore());
             CreateMap<Car, CarroResponseDto>();
 
             CreateMap<CarroArquivoRequestDto, CarroArquivo>();
@@ -21,7 +23,11 @@ namespace VendaVeiculosAPI.Utils
             CreateMap<UsuarioArquivoRequestDto, UsuarioArquivo>();
             CreateMap<UsuarioArquivo, UsuarioArquivoResponseDto>();
 
-            CreateMap<ArquivoRequestDto,  Arquivo>();
+            CreateMap<ArquivoRequestDto, Arquivo>()
+                .ForMember(dest => dest.NomeArquivo, opt => opt.MapFrom(src => src.Nome))
+                .ForMember(dest => dest.TipoArquivo, opt => opt.MapFrom(src => src.Tipo))
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Base64));
+
             CreateMap<Arquivo,  ArquivoResponseDto>();
         }
     }

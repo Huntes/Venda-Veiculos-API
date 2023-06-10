@@ -1,14 +1,19 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using VendaVeiculosAPI.Filters;
 using VendaVeiculosAPI.Models;
 using VendaVeiculosAPI.Repositories.Interfaces;
 using VendaVeiculosAPI.Utils;
 
 namespace VendaVeiculosAPI.Repositories.Impl
 {
-    public class CarroArquivoRepository : BaseRepository<CarroArquivo, CarroArquivoFilter>, ICarroArquivoRepository
+    public class CarroArquivoRepository : BaseRepository<CarroArquivo>, ICarroArquivoRepository
     {
         public CarroArquivoRepository(Context context) : base(context){}
+
+        public async Task<CarroArquivo> GetFirst(Guid idCarro, CancellationToken cancellationToken)
+        {
+            return await _context.CarroArquivos.Where(c => c.Carro.Id == idCarro).FirstOrDefaultAsync(cancellationToken) 
+                ?? new CarroArquivo();
+        }
 
         public async Task<List<CarroArquivo>> GetArquivosByIdCarroAsync(Guid idCarro, CancellationToken token)
         {
@@ -34,6 +39,11 @@ namespace VendaVeiculosAPI.Repositories.Impl
             _carroArquivo.Ativo = false;
             _carroArquivo.DataDelete = DateTimeHelpers.GetDateTimeNow();
             _context.CarroArquivos.Update(_carroArquivo);
+        }
+
+        public async Task<bool> ExistByIdCarro(Guid idCarro, CancellationToken token)
+        {
+            return await _context.CarroArquivos.AnyAsync(c => c.Carro.Id == idCarro, token);
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using VendaVeiculosAPI.Filters;
-using VendaVeiculosAPI.Models;
+﻿using VendaVeiculosAPI.Models;
 
 namespace VendaVeiculosAPI.Repositories.Interfaces
 {
-    public interface IUsuarioRepository : IBaseRepository<Usuario, UsuarioFilter>
+    public interface IUsuarioRepository : IBaseRepository<Usuario>
     {
         Task<Usuario> GetByNameAsync(string name, CancellationToken token);
         Task<Usuario> GetByIdAsync(Guid id, CancellationToken token);

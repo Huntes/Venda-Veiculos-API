@@ -1,9 +1,8 @@
-﻿using VendaVeiculosAPI.Filters;
-using VendaVeiculosAPI.Models;
+﻿using VendaVeiculosAPI.Models;
 
 namespace VendaVeiculosAPI.Repositories.Interfaces
 {
-    public interface IArquivoRepository : IBaseRepository<Arquivo, ArquivoFilter>
+    public interface IArquivoRepository : IBaseRepository<Arquivo>
     {
         Task<Arquivo> GetArquivoById(Guid id, CancellationToken token);
         Task<Arquivo> GetByName(string name, CancellationToken token);

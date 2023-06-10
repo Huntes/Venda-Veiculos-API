@@ -1,6 +1,5 @@
 ﻿using VendaVeiculosAPI.Dto.Request;
 using VendaVeiculosAPI.Dto.Response;
-using VendaVeiculosAPI.Filters;
 using VendaVeiculosAPI.Models;
 
 namespace VendaVeiculosAPI.Services.Interfaces

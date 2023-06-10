@@ -2,11 +2,13 @@
 {
     public class CarroRequestDto
     {
-        public string Modelo { get; set; }
-        public string Marca { get; set; }
-        public string Cor { get; set; }
-        public string Ano { get; set; }
-        public string Preco { get; set; }
-        public string Foto { get; set; }
+        public string Nome { get; set; } = string.Empty;
+        public string Marca { get; set; } = string.Empty;
+        public string Modelo { get; set; } = string.Empty;
+        public int Ano { get; set; }
+        public int Status { get; set; }
+        public double? Preco { get; set; }
+        public string? Quilometragem { get; set; }
+        public List<ArquivoRequestDto>? Fotos { get; set; }
     }
 }

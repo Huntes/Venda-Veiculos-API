@@ -20,6 +20,18 @@ namespace VendaVeiculosAPI.Services.Impl
             _arquivoRepository = arquivoRepository;
         }
 
+        public async Task<List<CarroArquivoResponseDto>> GetArquivosByIdCarroAsync(Guid idCarro, CancellationToken token)
+        {
+            var _listCarroArquivos = await _carroArquivoRepository.GetArquivosByIdCarroAsync(idCarro, token);
+            return ConvertModelToResponseDto(_listCarroArquivos);
+        }
+
+        public async Task<CarroArquivoResponseDto> GetFirst(Guid idCarro, CancellationToken token)
+        {
+            var _carroArquivo = await _carroArquivoRepository.GetFirst(idCarro, token);
+            return ConvertModelToResponseDto(_carroArquivo);
+        }
+
         public async Task<CarroArquivoResponseDto> CreateAsync(CarroArquivoRequestDto entity, CancellationToken token)
         {
             var Carro = await _carroRepository.GetByIdAsync(entity.IdCarro, token);
@@ -29,27 +41,30 @@ namespace VendaVeiculosAPI.Services.Impl
             if (Arquivo == null) { throw new NullReferenceException("O carro não foi encotnrado"); }
 
             var CarroArquivo = ConverRequestDtoToModel(entity);
+            
+            CarroArquivo.Arquivo = Arquivo;
+            CarroArquivo.Carro = Carro;
+
             await _carroArquivoRepository.CreateAsync(CarroArquivo, token);
-            await _carroArquivoRepository.SaveChangesAsync(token)
-                ;
+            await _carroArquivoRepository.SaveChangesAsync(token);
+
             return ConvertModelToResponseDto(CarroArquivo);
+        }
+
+        public async Task<bool> ExistCarroArquivo(Guid idCarro, CancellationToken token)
+        {
+            return await _carroArquivoRepository.ExistByIdCarro(idCarro, token);
+        }
+
+        public async Task<bool> ToggleAsync(Guid id, CancellationToken token)
+        {
+            return await _carroArquivoRepository.ToggleAsync(id, token);
         }
 
         public async Task DeleteCarroArquivo(Guid id, CancellationToken token)
         {
             await _carroArquivoRepository.DeleteCarroArquivo(id, token);
             await _carroArquivoRepository.SaveChangesAsync(token);
-        }
-
-        public async Task<List<CarroArquivoResponseDto>> GetArquivosByIdCarroAsync(Guid idCarro, CancellationToken token)
-        {
-            var _listCarroArquivos = await _carroArquivoRepository.GetArquivosByIdCarroAsync(idCarro, token);
-            return ConvertModelToResponseDto(_listCarroArquivos);
-        }
-
-        public async Task<bool> ToggleAsync(Guid id, CancellationToken token)
-        {
-            return await _carroArquivoRepository.ToggleAsync(id, token);
         }
     }
 }

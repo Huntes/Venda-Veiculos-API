@@ -36,12 +36,12 @@ namespace VendaVeiculosAPI.Services.Impl
             return ConvertModelToResponseDto(_arquivo);
         }
 
-        public async Task<ArquivoResponseDto> UpdateAsync(ArquivoRequestDto entity, CancellationToken token)
+        public async Task<ArquivoResponseDto> UpdateAsync(Guid id, ArquivoRequestDto entity, CancellationToken token)
         {
-            Arquivo _arquivo = await _arquivoRepository.GetArquivoById(entity.Id, token)
+            _ = await _arquivoRepository.GetArquivoById(id, token)
                 ?? throw new NullReferenceException("Arquivo não encontrado");
 
-            _arquivo = ConverRequestDtoToModel(entity);
+            Arquivo _arquivo = ConverRequestDtoToModel(entity);
             _arquivo = _arquivoRepository.Update(_arquivo);
             await _arquivoRepository.SaveChangesAsync(token);
             return ConvertModelToResponseDto(_arquivo);

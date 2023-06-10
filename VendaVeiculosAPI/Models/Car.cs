@@ -18,9 +18,6 @@ namespace VendaVeiculosAPI.Models
         [Required, Column("Modelo", TypeName = "VARCHAR(500)")]
         public string Modelo { get; set; }
 
-        [Column("Foto", TypeName = "VARCHAR(500)")]
-        public string? Foto { get; set; }
-
         [Required, Column("Ano")]
         public int Ano { get; set; }
 
@@ -42,12 +39,12 @@ namespace VendaVeiculosAPI.Models
             this.Modelo = string.Empty;
             this.Marca = string.Empty;
         }
-        public Car(string Nome, string Marca, string Modelo, string Foto, int Ano, string? quilometragem) : base()
+
+        public Car(string Nome, string Marca, string Modelo, int Ano, string? quilometragem) : base()
         {
             this.Nome = Nome;
             this.Marca = Marca;
             this.Modelo = Modelo;
-            this.Foto = Foto;
             this.Ano = Ano;
             this.Quilometragem = quilometragem;
         }
