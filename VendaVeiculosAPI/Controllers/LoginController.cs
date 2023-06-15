@@ -17,10 +17,10 @@ namespace VendaVeiculosAPI.Controllers
         public LoginController(ILoginService loginService)
         {
             _service = loginService;
-            _token = new CancellationTokenSource(5000);
+            _token = new CancellationTokenSource(10000);
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]LoginRequestDto entity)
         {
             try

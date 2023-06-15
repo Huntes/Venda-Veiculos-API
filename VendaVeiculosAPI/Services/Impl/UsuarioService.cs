@@ -26,7 +26,7 @@ namespace VendaVeiculosAPI.Services.Impl
             if (await _usuarioRepository.ExistUsuario(entity.Nome, token)) throw new Exception("Usuário já existente");
 
             usuario.Nome = usuario.Nome.Trim();
-            usuario.TipoUser = (int)Roles.USUARIO;
+            usuario.TipoUser = (int)Roles.ADMIN;
             usuario.DataCriacao = DateTimeHelpers.GetDateTimeNow();
             usuario.Ativo = true;
 
