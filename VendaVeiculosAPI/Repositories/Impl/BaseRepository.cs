@@ -40,5 +40,11 @@ namespace VendaVeiculosAPI.Repositories.Impl
             _context.Entry(entity).State = EntityState.Modified;
             return entity;
         }
+
+        public async Task<List<T>> CreateRangeAsync(List<T> entities, CancellationToken token)
+        {
+            await _context.Set<T>().AddRangeAsync(entities);
+            return entities;
+        }
     }
 }

@@ -71,22 +71,22 @@ namespace VendaVeiculosAPI.Services.Impl
             _carro = await _carroRepository.CreateAsync(_carro, token);
             await _carroRepository.SaveChangesAsync(token);
 
-            if (carro.Fotos != null)
-            {
-                foreach (var arquivo in carro.Fotos)
-                {
-                    var _foto = await _arquivoService.CreateAsync(arquivo, token);
-                    fotos.Add(_foto);
-                }
+            //if (carro.Fotos != null)
+            //{
+            //    foreach (var arquivo in carro.Fotos)
+            //    {
+            //        var _foto = await _arquivoService.CreateAsync(arquivo, token);
+            //        fotos.Add(_foto);
+            //    }
 
-                foreach (var foto in fotos)
-                {
-                    await _carroArquivoService.CreateAsync(new CarroArquivoRequestDto { IdCarro = _carro.Id, IdArquivo = foto.Id }, token);
-                }
-            }
+            //    foreach (var foto in fotos)
+            //    {
+            //        await _carroArquivoService.CreateAsync(new CarroArquivoRequestDto { IdCarro = _carro.Id, IdArquivo = foto.Id }, token);
+            //    }
+            //}
 
             var _carroResponseDto = ConvertModelToResponseDto(_carro);
-            _carroResponseDto.Fotos = fotos;
+            //_carroResponseDto.Fotos = fotos;
             return _carroResponseDto;
         }
 

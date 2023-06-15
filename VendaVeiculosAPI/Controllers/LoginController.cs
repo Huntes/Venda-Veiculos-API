@@ -9,6 +9,7 @@ namespace VendaVeiculosAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class LoginController : ControllerBase
     {
         private readonly ILoginService _service;

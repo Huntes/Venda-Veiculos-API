@@ -36,11 +36,6 @@ C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\VendaVeiculosAPI.A
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\VendaVeiculosAPI.csproj.CoreCompileInputs.cache
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\VendaVeiculosAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\VendaVeiculosAPI.MvcApplicationPartsAssemblyInfo.cache
-C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.VendaVeiculosAPI.Microsoft.AspNetCore.StaticWebAssets.props
-C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.VendaVeiculosAPI.props
-C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.VendaVeiculosAPI.props
-C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.VendaVeiculosAPI.props
-C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets.pack.json
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets.build.json
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets.development.json
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\scopedcss\bundle\VendaVeiculosAPI.styles.css
@@ -90,3 +85,8 @@ C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\bin\Debug\net6.0\System.Text.Json.d
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.VendaVeiculosAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.build.VendaVeiculosAPI.props
+C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildMultiTargeting.VendaVeiculosAPI.props
+C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets\msbuild.buildTransitive.VendaVeiculosAPI.props
+C:\repos\Venda-Veiculos-API\VendaVeiculosAPI\obj\Debug\net6.0\staticwebassets.pack.json

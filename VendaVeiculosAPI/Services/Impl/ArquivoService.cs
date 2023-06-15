@@ -16,6 +16,14 @@ namespace VendaVeiculosAPI.Services.Impl
             _arquivoRepository = repository;
         }
 
+        public async Task<List<ArquivoResponseDto>> CreateRange(List<ArquivoRequestDto> entities, CancellationToken token)
+        {
+            List<Arquivo> _arquivos = ConvertRequestDtoToModel(entities).ToList();
+            var _arquivosModel = await _arquivoRepository.CreateRangeAsync(_arquivos, token);
+            await _arquivoRepository.SaveChangesAsync(token);
+            return ConvertModelToResponseDto(_arquivosModel);
+        }
+
         public async Task<ArquivoResponseDto> CreateAsync(ArquivoRequestDto entity, CancellationToken token)
         {
             Arquivo _arquivo = ConverRequestDtoToModel(entity);

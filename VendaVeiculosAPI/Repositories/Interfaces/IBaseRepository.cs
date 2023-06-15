@@ -8,5 +8,6 @@
         Task<T> CreateAsync(T entity, CancellationToken token);
         T Update(T entity);
         Task SaveChangesAsync(CancellationToken token);
+        Task<List<T>> CreateRangeAsync(List<T> entities, CancellationToken token);
     }
 }

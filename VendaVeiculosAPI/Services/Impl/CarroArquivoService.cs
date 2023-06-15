@@ -32,6 +32,14 @@ namespace VendaVeiculosAPI.Services.Impl
             return ConvertModelToResponseDto(_carroArquivo);
         }
 
+        public async Task<List<CarroArquivoResponseDto>> CreateRangeAsync(List<CarroArquivoRequestDto> entities, CancellationToken token)
+        {
+            List<CarroArquivo> _carroArquivos = ConvertRequestDtoToModel(entities).ToList();
+            var _carroArquivosModel = await _carroArquivoRepository.CreateRangeAsync(_carroArquivos, token);
+            await _carroArquivoRepository.SaveChangesAsync(token);
+            return ConvertModelToResponseDto(_carroArquivosModel);
+        }
+
         public async Task<CarroArquivoResponseDto> CreateAsync(CarroArquivoRequestDto entity, CancellationToken token)
         {
             var Carro = await _carroRepository.GetByIdAsync(entity.IdCarro, token);
