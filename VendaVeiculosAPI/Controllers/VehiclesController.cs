@@ -19,7 +19,7 @@ namespace VendaVeiculosAPI.Controllers
         public VehiclesController(ICarroService carroService)
         {
             _service = carroService;
-            _token = new CancellationTokenSource(500000);
+            _token = new CancellationTokenSource(5000);
         }
 
         [HttpGet("getAll")]

@@ -24,7 +24,7 @@ namespace VendaVeiculosAPI.Services.Impl
         public async Task<List<CarroResponseDto>> GetAllAsync(CancellationToken token)
         {
             var _listCarros = await _carroRepository.GetAllAsync();
-            var _listCarrosResponseDto = ConvertModelToResponseDto(_listCarros ?? new List<Car>());
+            var _listCarrosResponseDto = ConvertModelToResponseDto(_listCarros);
 
             foreach(var carro in _listCarrosResponseDto)
             {
@@ -40,6 +40,8 @@ namespace VendaVeiculosAPI.Services.Impl
                     }
                 }
             }
+
+            _listCarrosResponseDto = _listCarrosResponseDto.OrderBy(x => x.Preco).ToList();
 
             return _listCarrosResponseDto;
         }
