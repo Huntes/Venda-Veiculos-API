@@ -23,11 +23,11 @@ namespace VendaVeiculosAPI.Controllers
         [Authorize]
         [HttpPost("insert")]
         [ProducesResponseType(typeof(CarroArquivoResponseDto), 200)]
-        public async Task<IActionResult> Insert([FromBody] CarroArquivoRequestDto entity)
+        public async Task<IActionResult> Insert([FromBody] CarroArquivoRequestDto entity, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.CreateAsync(entity, _token.Token));
+                return Ok(await _service.CreateAsync(entity, token));
             }
             catch (Exception ex)
             {
@@ -38,11 +38,11 @@ namespace VendaVeiculosAPI.Controllers
         [Authorize]
         [HttpPost("insert-files")]
         [ProducesResponseType(typeof(List<CarroArquivoResponseDto>), 200)]
-        public async Task<IActionResult> InsertFiles([FromBody] List<CarroArquivoRequestDto> entities)
+        public async Task<IActionResult> InsertFiles([FromBody] List<CarroArquivoRequestDto> entities, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.CreateRangeAsync(entities, _token.Token));
+                return Ok(await _service.CreateRangeAsync(entities, token));
             }
             catch (Exception ex)
             {

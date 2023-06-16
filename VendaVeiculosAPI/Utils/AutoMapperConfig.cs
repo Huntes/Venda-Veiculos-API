@@ -15,18 +15,17 @@ namespace VendaVeiculosAPI.Utils
 
             CreateMap<CarroRequestDto, Car>().ReverseMap()
                 .ForMember(dest => dest.Fotos, opt => opt.Ignore());
-            CreateMap<Car, CarroResponseDto>();
+            CreateMap<Car, CarroResponseDto>()
+                .ForMember(dest => dest.Fotos, opt => opt.MapFrom(src => 
+                src.Arquivos.Select(c => new ArquivoResponseDto(c.Arquivo))));
 
             CreateMap<CarroArquivoRequestDto, CarroArquivo>();
             CreateMap<CarroArquivo, CarroArquivoResponseDto>();
 
-            CreateMap<UsuarioArquivoRequestDto, UsuarioArquivo>();
-            CreateMap<UsuarioArquivo, UsuarioArquivoResponseDto>();
-
             CreateMap<ArquivoRequestDto, Arquivo>()
                 .ForMember(dest => dest.NomeArquivo, opt => opt.MapFrom(src => src.Nome))
                 .ForMember(dest => dest.TipoArquivo, opt => opt.MapFrom(src => src.Tipo))
-                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Base64));
+                .ForMember(dest => dest.Path, opt => opt.MapFrom(src => src.Path));
 
             CreateMap<Arquivo,  ArquivoResponseDto>();
         }

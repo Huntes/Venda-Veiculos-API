@@ -11,7 +11,6 @@ namespace VendaVeiculosAPI.Repositories
         public DbSet<Arquivo> Arquivos { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<CarroArquivo> CarroArquivos { get; set; }
-        public DbSet<UsuarioArquivo> UsuarioArquivos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

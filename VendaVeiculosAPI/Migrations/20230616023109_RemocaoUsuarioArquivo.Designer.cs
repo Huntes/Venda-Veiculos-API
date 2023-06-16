@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using VendaVeiculosAPI.Repositories;
 
@@ -11,9 +12,11 @@ using VendaVeiculosAPI.Repositories;
 namespace VendaVeiculosAPI.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20230616023109_RemocaoUsuarioArquivo")]
+    partial class RemocaoUsuarioArquivo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,7 +122,12 @@ namespace VendaVeiculosAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Status");
 
+                    b.Property<Guid?>("UsuarioCriacaoId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioCriacaoId");
 
                     b.ToTable("TB_CARRO");
                 });
@@ -209,6 +217,15 @@ namespace VendaVeiculosAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TB_USUARIO");
+                });
+
+            modelBuilder.Entity("VendaVeiculosAPI.Models.Car", b =>
+                {
+                    b.HasOne("VendaVeiculosAPI.Models.Usuario", "IDUsuarioCreate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioCriacaoId");
+
+                    b.Navigation("IDUsuarioCreate");
                 });
 
             modelBuilder.Entity("VendaVeiculosAPI.Models.CarroArquivo", b =>

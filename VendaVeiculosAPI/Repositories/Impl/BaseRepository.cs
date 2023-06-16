@@ -46,5 +46,11 @@ namespace VendaVeiculosAPI.Repositories.Impl
             await _context.Set<T>().AddRangeAsync(entities);
             return entities;
         }
+
+        public async Task<List<T>> RemoveRange(List<T> entities, CancellationToken token)
+        {
+            _context.Set<T>().RemoveRange(entities);
+            return entities;
+        }
     }
 }

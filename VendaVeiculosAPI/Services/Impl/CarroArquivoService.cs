@@ -74,5 +74,11 @@ namespace VendaVeiculosAPI.Services.Impl
             await _carroArquivoRepository.DeleteCarroArquivo(id, token);
             await _carroArquivoRepository.SaveChangesAsync(token);
         }
+
+        public async Task DeleteCarroArquivoRangeAsync(Guid idCarro, CancellationToken token)
+        {
+            await _carroArquivoRepository.DeleteAllCarroArquivo(idCarro, token);
+            await _carroArquivoRepository.SaveChangesAsync(token);
+        }
     }
 }

@@ -17,15 +17,15 @@ namespace VendaVeiculosAPI.Controllers
         public LoginController(ILoginService loginService)
         {
             _service = loginService;
-            _token = new CancellationTokenSource(10000);
+            _token = new CancellationTokenSource(100000);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody]LoginRequestDto entity)
+        public async Task<IActionResult> Login([FromBody]LoginRequestDto entity, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.Login(entity, _token.Token));
+                return Ok(await _service.Login(entity, token));
             }
             catch (Exception ex)
             {

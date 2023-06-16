@@ -11,13 +11,13 @@ namespace VendaVeiculosAPI.Repositories.Impl
 
         public async Task<CarroArquivo> GetFirst(Guid idCarro, CancellationToken cancellationToken)
         {
-            return await _context.CarroArquivos.Where(c => c.Carro.Id == idCarro).FirstOrDefaultAsync(cancellationToken) 
+            return await _context.CarroArquivos.Where(c => c.Carro.Id == idCarro && c.Ativo && c.DataDelete == null).FirstOrDefaultAsync(cancellationToken) 
                 ?? new CarroArquivo();
         }
 
         public async Task<List<CarroArquivo>> GetArquivosByIdCarroAsync(Guid idCarro, CancellationToken token)
         {
-            return await _context.CarroArquivos.Where(c => c.Carro.Id == idCarro).ToListAsync(token);
+            return await _context.CarroArquivos.Where(c => c.Carro.Id == idCarro && c.Ativo && c.DataDelete == null).ToListAsync(token);
         }
 
         public async Task<bool> ToggleAsync(Guid id, CancellationToken token)
@@ -43,7 +43,13 @@ namespace VendaVeiculosAPI.Repositories.Impl
 
         public async Task<bool> ExistByIdCarro(Guid idCarro, CancellationToken token)
         {
-            return await _context.CarroArquivos.AnyAsync(c => c.Carro.Id == idCarro, token);
+            return await _context.CarroArquivos.AnyAsync(c => c.Carro.Id == idCarro && c.Ativo && c.DataDelete == null, token);
+        }
+
+        public async Task DeleteAllCarroArquivo(Guid idCarro, CancellationToken token)
+        {
+            var _listArquivos = await _context.CarroArquivos.Where(c => c.Carro.Id == idCarro).AsNoTracking().ToListAsync(token);
+            _context.CarroArquivos.RemoveRange(_listArquivos);
         }
     }
 }

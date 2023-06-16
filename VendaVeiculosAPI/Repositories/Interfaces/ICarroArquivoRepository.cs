@@ -7,6 +7,7 @@ namespace VendaVeiculosAPI.Repositories.Interfaces
         Task<CarroArquivo> GetFirst(Guid idCarro, CancellationToken cancellationToken);
         Task<List<CarroArquivo>> GetArquivosByIdCarroAsync(Guid idCarro, CancellationToken token);
         Task<bool> ToggleAsync(Guid id, CancellationToken token);
+        Task DeleteAllCarroArquivo(Guid idCarro, CancellationToken token);
         Task DeleteCarroArquivo(Guid id, CancellationToken token);
         Task<bool> ExistByIdCarro (Guid idCarro, CancellationToken token);
     }

@@ -11,6 +11,7 @@ namespace VendaVeiculosAPI.Services.Interfaces
         Task<CarroArquivoResponseDto> GetFirst(Guid idCarro, CancellationToken token);
         Task<bool> ToggleAsync(Guid id, CancellationToken token);
         Task DeleteCarroArquivo(Guid id, CancellationToken token);
+        Task DeleteCarroArquivoRangeAsync(Guid idCarro, CancellationToken token);
         Task<bool> ExistCarroArquivo(Guid idCarro, CancellationToken token);
     }
 }

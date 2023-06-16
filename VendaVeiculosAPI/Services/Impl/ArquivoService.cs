@@ -5,15 +5,18 @@ using VendaVeiculosAPI.Models;
 using VendaVeiculosAPI.Repositories.Impl;
 using VendaVeiculosAPI.Repositories.Interfaces;
 using VendaVeiculosAPI.Services.Interfaces;
+using VendaVeiculosAPI.Utils;
 
 namespace VendaVeiculosAPI.Services.Impl
 {
     public class ArquivoService : BaseService<Arquivo, ArquivoRequestDto, ArquivoResponseDto>, IArquivoService
     {
         private readonly IArquivoRepository _arquivoRepository;
-        public ArquivoService(IArquivoRepository repository, IMapper mapper) : base(mapper)
+        private readonly ICarroArquivoRepository _carroArquivoRepository;
+        public ArquivoService(IArquivoRepository repository, ICarroArquivoRepository carroArquivoRepository, IMapper mapper) : base(mapper)
         {
             _arquivoRepository = repository;
+            _carroArquivoRepository = carroArquivoRepository;
         }
 
         public async Task<List<ArquivoResponseDto>> CreateRange(List<ArquivoRequestDto> entities, CancellationToken token)
@@ -21,6 +24,34 @@ namespace VendaVeiculosAPI.Services.Impl
             List<Arquivo> _arquivos = ConvertRequestDtoToModel(entities).ToList();
             var _arquivosModel = await _arquivoRepository.CreateRangeAsync(_arquivos, token);
             await _arquivoRepository.SaveChangesAsync(token);
+            return ConvertModelToResponseDto(_arquivosModel);
+        }
+
+        public async Task<List<ArquivoResponseDto>> CreateAsync(ArquivoRequestInsertDto entity, CancellationToken token)
+        {
+            var _listCarroArquivo = new List<CarroArquivo>();
+            var _listArquivos = ConvertRequestDtoToModel(entity.Arquivos ?? new List<ArquivoRequestDto>()).ToList(); 
+            var _carroModel = new Car { Id = entity.IdCarro };
+
+            _listArquivos.ForEach(arquivo =>
+            {
+                arquivo.Id = Guid.NewGuid();
+            });
+
+            var _arquivosModel = await _arquivoRepository.CreateRangeAsync(_listArquivos, token);
+
+            _arquivosModel.ForEach(arquivo => {
+                _listCarroArquivo.Add(new CarroArquivo 
+                {
+                    CarroId = entity.IdCarro,
+                    ArquivoId = arquivo.Id, 
+                    DataCriacao = DateTimeHelpers.GetDateTimeNow() 
+                });
+            });
+
+            await _carroArquivoRepository.CreateRangeAsync(_listCarroArquivo, token);
+            await _carroArquivoRepository.SaveChangesAsync(token);
+
             return ConvertModelToResponseDto(_arquivosModel);
         }
 
@@ -35,6 +66,7 @@ namespace VendaVeiculosAPI.Services.Impl
         public async Task<List<ArquivoResponseDto>> GetAllArquivos(CancellationToken token)
         {
             var _listArquivo = await _arquivoRepository.GetAllAsync();
+            _listArquivo = _listArquivo.Where(c => c.DataDelete == null).ToList();
             return ConvertModelToResponseDto(_listArquivo);
         }
 
@@ -67,5 +99,6 @@ namespace VendaVeiculosAPI.Services.Impl
             await _arquivoRepository.ToggleAsync(id, token);
             await _arquivoRepository.SaveChangesAsync(token);
         }
+
     }
 }

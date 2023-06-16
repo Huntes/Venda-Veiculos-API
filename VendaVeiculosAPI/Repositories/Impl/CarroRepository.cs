@@ -11,7 +11,8 @@ namespace VendaVeiculosAPI.Repositories.Impl
 
         public async Task<List<Car>> GetAllAsync(CancellationToken token)
         {
-            return await _context.Carros.AsNoTracking().ToListAsync(token);
+            var _list = await _context.Carros.AsNoTracking().ToListAsync(token);
+            return _list.Where(c => c.DataDelete == null && c.Ativo).ToList();
         }
 
         public async Task<Car> GetByIdAsync(Guid id, CancellationToken token)
@@ -24,7 +25,7 @@ namespace VendaVeiculosAPI.Repositories.Impl
         public async Task<Car> GetByModelo(string modelo, CancellationToken token)
         {
             return await _context.Carros.AsNoTracking()
-                .FirstOrDefaultAsync(c => c.Modelo.ToUpper() == modelo.ToUpper()) ?? new Car();
+                .FirstOrDefaultAsync(c => c.Modelo.ToUpper() == modelo.ToUpper() && c.DataDelete == null && c.Ativo) ?? new Car();
         }
 
         public async Task<bool> ToggleStatus(Guid id, CancellationToken token)

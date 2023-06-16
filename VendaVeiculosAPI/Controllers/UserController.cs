@@ -23,11 +23,11 @@ namespace VendaVeiculosAPI.Controllers
 
         [HttpPost("insert")]
         [ProducesResponseType(typeof(UsuarioResponseDto), 200)]
-        public async Task<IActionResult> Create(UsuarioRequestDto usuarioRequestDto)
+        public async Task<IActionResult> Create(UsuarioRequestDto usuarioRequestDto, CancellationToken token)
         {
             try
             {
-                var _usuario = await _service.CreateAsync(usuarioRequestDto, _token.Token);
+                var _usuario = await _service.CreateAsync(usuarioRequestDto, token);
                 return Ok(_usuario);
             }
             catch (Exception ex)
@@ -38,11 +38,11 @@ namespace VendaVeiculosAPI.Controllers
 
         [HttpGet("get/{id}")]
         [ProducesResponseType(typeof(UsuarioResponseDto), 200)]
-        public async Task<IActionResult> GetById(Guid id)
+        public async Task<IActionResult> GetById(Guid id, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.GetByIdAsync(id, _token.Token));
+                return Ok(await _service.GetByIdAsync(id, token));
             }
             catch (Exception ex)
             {
@@ -53,11 +53,11 @@ namespace VendaVeiculosAPI.Controllers
         [Authorize]
         [HttpPut("update/{id}")]
         [ProducesResponseType(typeof(UsuarioResponseDto), 200)]
-        public async Task<IActionResult> Update(Guid id, [FromBody] UsuarioRequestDto entity)
+        public async Task<IActionResult> Update(Guid id, [FromBody] UsuarioRequestDto entity, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.UpdateAsync(id ,entity, _token.Token));
+                return Ok(await _service.UpdateAsync(id ,entity, token));
             }
             catch (Exception ex)
             {

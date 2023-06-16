@@ -18,7 +18,7 @@ namespace VendaVeiculosAPI.Services.Impl
 
         public async Task<string> Login(LoginRequestDto entity, CancellationToken token)
         {
-            var _usuario = await _usuarioRepository.GetByNameAsync(entity.Login, token) 
+            var _usuario = await _usuarioRepository.GetByEmailAsync(entity.Login, token) 
                 ?? throw new Exception("Usuário não encontrado");
 
             if (!Utils.Utils.VerifyPassword(entity.Password, _usuario.Senha))

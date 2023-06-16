@@ -10,7 +10,6 @@ namespace VendaVeiculosAPI.Repositories
             services.AddScoped<ICarroRepository, CarroRepository>();
             services.AddScoped<IArquivoRepository, ArquivoRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-            services.AddScoped<IUsuarioArquivoRepository, UsuarioArquivoRepository>();
             services.AddScoped<ICarroArquivoRepository, CarroArquivoRepository>();
 
             return services;

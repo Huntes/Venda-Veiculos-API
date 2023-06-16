@@ -43,6 +43,8 @@ namespace VendaVeiculosAPI.Services.Impl
             var _list = await _usuarioRepository.GetAllAsync()
                 ?? new List<Usuario>();
 
+            _list = _list.Where(x => x.DataDelete == null && x.Ativo).ToList();
+
             return ConvertModelToResponseDto(_list);
         }
 
@@ -55,6 +57,12 @@ namespace VendaVeiculosAPI.Services.Impl
         public async Task<UsuarioResponseDto?> GetByNameAsync(string name, CancellationToken token)
         {
             var _usuario = await _usuarioRepository.GetByNameAsync(name, token);
+            return ConvertModelToResponseDto(_usuario);
+        }
+
+        public async Task<UsuarioResponseDto?> GetByEmailAsync(string name, CancellationToken token)
+        {
+            var _usuario = await _usuarioRepository.GetByEmailAsync(name, token);
             return ConvertModelToResponseDto(_usuario);
         }
 

@@ -30,8 +30,7 @@ namespace VendaVeiculosAPI.Models
         [Column("Quilometragem", TypeName = "VARCHAR(500)")]
         public string? Quilometragem { get; set; }
 
-        [ForeignKey("UsuarioCriacaoId")]
-        public Usuario? IDUsuarioCreate { get; set; }
+        public virtual ICollection<CarroArquivo> Arquivos { get; set; }
 
         public Car()
         {

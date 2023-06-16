@@ -27,5 +27,11 @@ namespace VendaVeiculosAPI.Models
             this.Carro = carro;
             this.Arquivo = arquivo;
         }
+
+        public CarroArquivo(Guid idCarro, Guid idArquivo)
+        {
+            this.CarroId = idCarro;
+            this.ArquivoId = idArquivo;
+        }
     }
 }

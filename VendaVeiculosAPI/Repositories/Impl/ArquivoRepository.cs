@@ -20,7 +20,7 @@ namespace VendaVeiculosAPI.Repositories.Impl
         {
             return await _context.Arquivos
                 .AsTracking()
-                .FirstOrDefaultAsync(c => c.NomeArquivo.ToUpper() == name.ToUpper(), token);
+                .FirstOrDefaultAsync(c => c.NomeArquivo.ToUpper() == name.ToUpper() && c.DataDelete == null && c.Ativo, token);
         }
 
         public async Task<bool> ToggleAsync(Guid id, CancellationToken token)

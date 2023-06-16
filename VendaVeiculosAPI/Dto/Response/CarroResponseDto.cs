@@ -12,7 +12,6 @@ namespace VendaVeiculosAPI.Dto.Response
         public int Status { get; set; }
         public double? Preco { get; set; }
         public string? Quilometragem { get; set; }
-        public Guid IDUsuarioCreate { get; set; }
         public List<ArquivoResponseDto>? Fotos { get; set; }
     }
 }

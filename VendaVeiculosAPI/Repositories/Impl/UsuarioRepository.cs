@@ -16,11 +16,18 @@ namespace VendaVeiculosAPI.Repositories.Impl
                 .FirstOrDefaultAsync(c => c.Id == id, token);
         }
 
+        public async Task<Usuario> GetByEmailAsync(string email, CancellationToken token)
+        {
+            return await _context.Usuarios
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Email.ToUpper() == email.ToUpper() && c.DataDelete == null && c.Ativo, token);
+        }
+
         public async Task<Usuario> GetByNameAsync(string name, CancellationToken token)
         {
             return await _context.Usuarios
                .AsNoTracking()
-               .FirstOrDefaultAsync(c => c.Nome.ToUpper() == name.ToUpper(), token);
+               .FirstOrDefaultAsync(c => c.Nome.ToUpper() == name.ToUpper() && c.DataDelete == null && c.Ativo, token);
         }
 
         public async Task<Usuario> ToggleAsync(Guid id, CancellationToken token)
@@ -40,9 +47,11 @@ namespace VendaVeiculosAPI.Repositories.Impl
             _context.Usuarios.Update(_user);
         }
 
-        public Task<bool> ExistUsuario(string name, CancellationToken token)
+        public async Task<bool> ExistUsuario(string name, CancellationToken token)
         {
-            return _context.Usuarios.AnyAsync(c => c.Nome.ToUpper() == name.ToUpper(), token);
+            return await _context.Usuarios.AnyAsync(c => c.Nome.ToUpper() == name.ToUpper() && c.Ativo && c.DataDelete == null, token);
         }
+
+
     }
 }

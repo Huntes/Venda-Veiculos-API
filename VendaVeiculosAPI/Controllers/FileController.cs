@@ -19,17 +19,17 @@ namespace VendaVeiculosAPI.Controllers
         public FileController(IArquivoService arquivoService)
         {
             _service = arquivoService;
-            _token = new CancellationTokenSource(5000);
+            _token = new CancellationTokenSource(50000);
         }
 
         [Authorize]
         [HttpPost("upload")]
         [ProducesResponseType(typeof(ArquivoResponseDto), 200)]
-        public async Task<IActionResult> UploadFile([FromBody] ArquivoRequestDto entity)
+        public async Task<IActionResult> UploadFile([FromBody] ArquivoRequestDto entity, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.CreateAsync(entity, _token.Token));
+                return Ok(await _service.CreateAsync(entity, token));
             }
             catch (Exception ex)
             {
@@ -40,11 +40,26 @@ namespace VendaVeiculosAPI.Controllers
         [Authorize]
         [HttpPost("upload-files")]
         [ProducesResponseType(typeof(ArquivoResponseDto), 200)]
-        public async Task<IActionResult> UploadFiles([FromBody] List<ArquivoRequestDto> entities)
+        public async Task<IActionResult> UploadFiles([FromBody] List<ArquivoRequestDto> entities, CancellationToken token)
         {
             try
             {
-                return Ok(await _service.CreateRange(entities, _token.Token));
+                return Ok(await _service.CreateRange(entities, token));
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPost("upload-files-car")]
+        [ProducesResponseType(typeof(List<ArquivoResponseDto>), 200)]
+        public async Task<IActionResult> UploadFilesCar([FromBody] ArquivoRequestInsertDto entity, CancellationToken token)
+        {
+            try
+            {
+                return Ok(await _service.CreateAsync(entity, token));
             }
             catch (Exception ex)
             {
@@ -54,11 +69,11 @@ namespace VendaVeiculosAPI.Controllers
 
         [HttpGet("get/{id}")]
         [ProducesResponseType(typeof(ArquivoResponseDto), 200)]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(Guid id, CancellationToken token)
         {
             try
             {
-                var _file = await _service.GetByIdAsync(id, _token.Token);
+                var _file = await _service.GetByIdAsync(id, token);
                 return Ok(_file);
             }
             catch (Exception ex)
@@ -70,11 +85,11 @@ namespace VendaVeiculosAPI.Controllers
         [Authorize]
         [HttpDelete("delete/{id}")]
         [ProducesResponseType(typeof(String), 200)]
-        public async Task<IActionResult> Delete(Guid id)
+        public async Task<IActionResult> Delete(Guid id, CancellationToken token)
         {
             try
             {
-                await _service.DeleteArquivo(id, _token.Token);
+                await _service.DeleteArquivo(id, token);
                 return Ok();
             }
             catch(Exception ex)
